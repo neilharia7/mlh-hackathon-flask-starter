@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
-import functools, json, requests
 
-from flask import flash, redirect, render_template, request
 from flask import Blueprint, session, url_for, g
+from flask import flash, redirect, request
 
 from app.models.user import User
-from app.settings import GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
 from app.services.github import GitHub
+from app.settings import GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
+
 
 @blueprint.route('/login/github')
 def githubLogin():
     github = GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET)
     return redirect(github.authorization_url(scope='public_repo'))
+
 
 @blueprint.route('/callback/github', methods=('GET', 'POST'))
 def githubCallback():
@@ -35,10 +36,12 @@ def githubCallback():
 
     return redirect(url_for('home.index'))
 
+
 @blueprint.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('home.index'))
+
 
 @blueprint.before_app_request
 def get_current_user():

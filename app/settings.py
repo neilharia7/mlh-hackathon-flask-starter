@@ -1,9 +1,10 @@
 """Settings configuration - Configuration for environment variables can go in here."""
 
 import os
+
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=os.getcwd() + '/.env.example')
 
 ENV = os.getenv('FLASK_ENV', default='production')
 DEBUG = ENV == 'development'

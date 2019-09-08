@@ -1,6 +1,7 @@
 from app.extensions import db
 from app.services.github import GitHub
 
+
 class User(db.Model):
     __tablename__ = 'user'
 
